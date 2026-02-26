@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnglishUp — Learn English for Free</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6ef;
+    --ink: #1a1208;
+    --amber: #e8a020;
+    --amber-light: #f5c96a;
+    --sage: #4a7c59;
+    --coral: #d9553a;
+    --paper: #f3ede3;
+    --shadow: rgba(26,18,8,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    background: var(--cream);
+    border-bottom: 2px solid var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .logo span { color: var(--amber); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { text-decoration: none; color: var(--ink); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+  nav ul a:hover { color: var(--amber); }
+  .nav-btn {
+    background: var(--ink);
+    color: var(--cream) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    transition: background 0.2s !important;
+  }
+  .nav-btn:hover { background: var(--amber) !important; color: var(--ink) !important; }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    overflow: hidden;
+  }
+  .hero-left {
+    padding: 5rem 4rem 5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--amber-light);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 2px solid var(--ink);
+    width: fit-content;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -2px;
+  }
+  .hero-title em { font-style: italic; color: var(--amber); }
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #4a4030;
+    max-width: 440px;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.9rem 2.2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary:hover { background: var(--amber); color: var(--ink); transform: translateY(-2px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.9rem 2.2rem;
+    border: 2px solid var(--ink);
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-secondary:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+  .stats { display: flex; gap: 2.5rem; margin-top: 1rem; }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700; }
+  .stat-label { font-size: 0.8rem; color: #7a6a50; font-weight: 500; }
+
+  .hero-right {
+    background: var(--amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    position: relative;
+    border-left: 3px solid var(--ink);
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: var(--amber-light);
+    top: -100px; right: -100px;
+    opacity: 0.5;
+  }
+  .word-card-demo {
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 2.5rem 3rem;
+    text-align: center;
+    box-shadow: 8px 8px 0 var(--ink);
+    position: relative;
+    z-index: 2;
+    min-width: 300px;
+    animation: float 3s ease-in-out infinite;
+  }
+  .wc-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #7a6a50; }
+  .wc-word { font-family: 'Fraunces', serif; font-size: 3.5rem; font-weight: 700; margin: 0.5rem 0; }
+  .wc-phonetic { font-size: 1rem; color: var(--sage); margin-bottom: 0.8rem; }
+  .wc-def { font-size: 0.95rem; line-height: 1.6; color: #4a4030; max-width: 250px; margin: 0 auto; }
+  .wc-tag {
+    display: inline-block;
+    background: var(--amber-light);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 2px solid var(--ink);
+    margin-top: 1rem;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION TITLES */
+  section { padding: 5rem 6rem; }
+  .section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: #5a4e3a; font-size: 1.05rem; line-height: 1.7; max-width: 550px; }
+
+  /* MODULES */
+  .modules-section { background: var(--paper); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); }
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .module-card {
+    background: var(--cream);
+    border: 2.5px solid var(--ink);
+    border-radius: 16px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .module-card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 6px 6px 0 var(--ink); }
+  .module-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .module-title { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .module-desc { font-size: 0.9rem; color: #5a4e3a; line-height: 1.6; }
+  .module-count {
+    display: inline-block;
+    margin-top: 1rem;
+    background: var(--amber-light);
+    border: 2px solid var(--ink);
+    border-radius: 50px;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /* INTERACTIVE PRACTICE */
+  .practice-section { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
+  .quiz-demo {
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 6px 6px 0 var(--amber);
+  }
+  .quiz-q { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.8rem; }
+  .quiz-opt {
+    padding: 0.9rem 1.2rem;
+    border: 2.5px solid var(--ink);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: var(--cream);
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    text-align: left;
+  }
+  .quiz-opt:hover { background: var(--amber-light); transform: translateX(5px); }
+  .quiz-opt.correct { background: #c8f0d0; border-color: var(--sage); }
+  .quiz-opt.wrong { background: #ffd5cc; border-color: var(--coral); }
+  .quiz-feedback { margin-top: 1.2rem; padding: 1rem; border-radius: 12px; font-weight: 500; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.good { background: #c8f0d0; border: 2px solid var(--sage); }
+  .quiz-feedback.bad { background: #ffd5cc; border: 2px solid var(--coral); }
+  .quiz-next { margin-top: 1.2rem; display: none; }
+  .quiz-next.show { display: block; }
+
+  /* LEVELS */
+  .levels-section { background: var(--ink); color: var(--cream); border-top: 3px solid var(--amber); }
+  .levels-section .section-title { color: var(--cream); }
+  .levels-section .section-sub { color: #c0a878; }
+  .levels-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .level-card {
+    background: #2a1e0e;
+    border: 2px solid #3a2e1e;
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .level-card:hover { border-color: var(--amber); background: #3a2e1e; transform: translateY(-4px); }
+  .level-card.active { border-color: var(--amber); background: var(--amber); color: var(--ink); }
+  .level-name { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700; }
+  .level-label { font-size: 0.75rem; opacity: 0.7; margin-top: 0.3rem; }
+
+  /* VOCAB FLASHCARD */
+  .flashcard-section { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
+  .flashcard-wrap { perspective: 1000px; }
+  .flashcard {
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 8px 8px 0 var(--amber);
+    transition: transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .flashcard:hover { transform: scale(1.02); }
+  .flashcard::before {
+    content: 'Click to flip';
+    position: absolute;
+    bottom: 1rem;
+    font-size: 0.75rem;
+    color: #9a8a70;
+    letter-spacing: 1px;
+  }
+  .card-front, .card-back { width: 100%; }
+  .card-back { display: none; }
+  .card-word { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card-pos { font-size: 0.85rem; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+  .card-meaning { font-size: 1.1rem; line-height: 1.6; color: #4a4030; }
+  .card-example { font-style: italic; font-size: 0.9rem; color: #7a6a50; margin-top: 0.8rem; }
+  .flashcard-controls { display: flex; gap: 1rem; margin-top: 1.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3rem 6rem;
+    border-top: 3px solid var(--amber);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .footer-logo { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: #c0a878; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  footer p { color: #7a6a50; font-size: 0.85rem; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 3rem 1.5rem; }
+    .hero-right { min-height: 300px; }
+    section { padding: 3.5rem 1.5rem; }
+    .practice-section, .flashcard-section { grid-template-columns: 1fr; gap: 2.5rem; }
+    .levels-grid { grid-template-columns: repeat(3, 1fr); }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">English<span>Up</span></div>
+  <ul>
+    <li><a href="#modules">Lessons</a></li>
+    <li><a href="#practice">Practice</a></li>
+    <li><a href="#vocab">Vocabulary</a></li>
+    <li><a href="#levels">Levels</a></li>
+    <li><a href="#" class="nav-btn">Start Free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">✨ 100% Free, Forever</div>
+    <h1 class="hero-title">
+      Learn English<br>
+      the <em>right</em> way,<br>
+      for free.
+    </h1>
+    <p class="hero-sub">Interactive lessons, vocabulary drills, grammar exercises, and speaking practice — all designed to help you speak confidently from day one.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">Start Learning →</button>
+      <button class="btn-secondary" onclick="document.getElementById('practice').scrollIntoView({behavior:'smooth'})">Try a Quiz</button>
+    </div>
+    <div class="stats">
+      <div>
+        <div class="stat-num">50K+</div>
+        <div class="stat-label">Students</div>
+      </div>
+      <div>
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Lessons</div>
+      </div>
+      <div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">Levels</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="word-card-demo">
+      <div class="wc-label">Word of the Day</div>
+      <div class="wc-word">Serendipity</div>
+      <div class="wc-phonetic">/ ˌser.ənˈdɪp.ɪ.ti /</div>
+      <div class="wc-def">The pleasant surprise of finding something good without looking for it.</div>
+      <div class="wc-tag">noun · B2 level</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULES -->
+<section id="modules" class="modules-section">
+  <div class="section-label">What You'll Learn</div>
+  <h2 class="section-title">Everything you need<br>to master English</h2>
+  <p class="section-sub">From your very first words to advanced business English — structured courses that grow with you.</p>
+  <div class="modules-grid">
+    <a class="module-card" href="#" onclick="return false">
+      <div class="module-icon">📖</div>
+      <div class="module-title">Grammar</div>
+      <div class="module-desc">Tenses, sentences, conditionals — made simple with clear rules and examples.</div>
+      <div class="module-count">48 lessons</div>
+    </a>
+    <a class="module-card" href="#" onclick="return false">
+      <div class="module-icon">💬</div>
+      <div class="module-title">Speaking</div>
+      <div class="module-desc">Everyday conversations, pronunciation tips, and real dialogue practice.</div>
+      <div class="module-count">35 lessons</div>
+    </a>
+    <a class="module-card" href="#" onclick="return false">
+      <div class="module-icon">🔤</div>
+      <div class="module-title">Vocabulary</div>
+      <div class="module-desc">Flashcards, word families, and contextual learning for fast retention.</div>
+      <div class="module-count">500+ words</div>
+    </a>
+    <a class="module-card" href="#" onclick="return false">
+      <div class="module-icon">👂</div>
+      <div class="module-title">Listening</div>
+      <div class="module-desc">Audio exercises with native speakers covering different accents.</div>
+      <div class="module-count">40 exercises</div>
+    </a>
+    <a class="module-card" href="#" onclick="return false">
+      <div class="module-icon">✍️</div>
+      <div class="module-title">Writing</div>
+      <div class="module-desc">Emails, essays, and everyday writing guided by step-by-step prompts.</div>
+      <div class="module-count">28 lessons</div>
+    </a>
+    <a class="module-card" href="#" onclick="return false">
+      <div class="module-icon">📝</div>
+      <div class="module-title">Reading</div>
+      <div class="module-desc">Short texts, stories, and articles with comprehension questions.</div>
+      <div class="module-count">60 texts</div>
+    </a>
+  </div>
+</section>
+
+<!-- PRACTICE QUIZ -->
+<section id="practice">
+  <div class="practice-section">
+    <div>
+      <div class="section-label">Interactive Practice</div>
+      <h2 class="section-title">Test your skills<br>right now</h2>
+      <p class="section-sub">Quick grammar and vocabulary quizzes that adapt to your level. Get instant feedback and explanations.</p>
+      <br>
+      <button class="btn-primary" onclick="nextQuestion()">New Question →</button>
+    </div>
+    <div class="quiz-demo">
+      <div class="quiz-q" id="quiz-question">Loading question...</div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <button class="btn-primary quiz-next" id="quiz-next" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </div>
+</section>
+
+<!-- LEVELS -->
+<section id="levels" class="levels-section">
+  <div class="section-label">Your Learning Path</div>
+  <h2 class="section-title">Choose your level</h2>
+  <p class="section-sub">Start wherever you are — from complete beginner to advanced. Each level builds on the last.</p>
+  <div class="levels-grid">
+    <div class="level-card active" onclick="setLevel(this)">
+      <div class="level-name">A1</div>
+      <div class="level-label">Beginner</div>
+    </div>
+    <div class="level-card" onclick="setLevel(this)">
+      <div class="level-name">A2</div>
+      <div class="level-label">Elementary</div>
+    </div>
+    <div class="level-card" onclick="setLevel(this)">
+      <div class="level-name">B1</div>
+      <div class="level-label">Intermediate</div>
+    </div>
+    <div class="level-card" onclick="setLevel(this)">
+      <div class="level-name">B2</div>
+      <div class="level-label">Upper-Inter.</div>
+    </div>
+    <div class="level-card" onclick="setLevel(this)">
+      <div class="level-name">C1</div>
+      <div class="level-label">Advanced</div>
+    </div>
+    <div class="level-card" onclick="setLevel(this)">
+      <div class="level-name">C2</div>
+      <div class="level-label">Mastery</div>
+    </div>
+  </div>
+</section>
+
+<!-- VOCABULARY FLASHCARDS -->
+<section id="vocab">
+  <div class="flashcard-section">
+    <div>
+      <div class="section-label">Vocabulary Builder</div>
+      <h2 class="section-title">Learn words<br>that stick</h2>
+      <p class="section-sub">Spaced-repetition flashcards. Flip to see the meaning, then mark how well you knew it. The cards you miss appear more often.</p>
+      <br>
+      <div class="flashcard-controls">
+        <button class="btn-primary" onclick="prevCard()">← Prev</button>
+        <button class="btn-secondary" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+    <div class="flashcard-wrap">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="card-front" id="card-front">
+          <div class="card-word" id="card-word">Persevere</div>
+          <div class="card-pos">verb</div>
+        </div>
+        <div class="card-back" id="card-back">
+          <div class="card-meaning" id="card-meaning">To continue doing something even when it's difficult or takes a long time.</div>
+          <div class="card-example" id="card-example">"She persevered with her studies despite many challenges."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">English<span>Up</span></div>
+    <p style="margin-top:0.5rem">Free English for everyone, everywhere.</p>
+  </div>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
+    <a href="#">Privacy</a>
+  </div>
+  <p>© 2026 EnglishUp. All rights reserved.</p>
+</footer>
+
+<script>
+// QUIZ
+const questions = [
+  {
+    q: "Choose the correct sentence:",
+    options: ["She don't like coffee.", "She doesn't like coffee.", "She not likes coffee.", "She no like coffee."],
+    answer: 1,
+    exp: "✅ Correct! With he/she/it, we use 'doesn't' + base verb."
+  },
+  {
+    q: "Fill in the blank: 'I have been studying English ___ two years.'",
+    options: ["since", "for", "during", "ago"],
+    answer: 1,
+    exp: "✅ 'For' is used with a duration of time (two years, five months, etc.)."
+  },
+  {
+    q: "What is the past tense of 'go'?",
+    options: ["goed", "gone", "went", "go"],
+    answer: 2,
+    exp: "✅ 'Go' is irregular. The past simple is 'went'."
+  },
+  {
+    q: "Which word means 'very happy'?",
+    options: ["melancholy", "elated", "anxious", "weary"],
+    answer: 1,
+    exp: "✅ 'Elated' means extremely happy or proud."
+  },
+  {
+    q: "Choose the correct preposition: 'She is good ___ maths.'",
+    options: ["in", "with", "at", "on"],
+    answer: 2,
+    exp: "✅ We say 'good AT' a subject or skill."
+  }
+];
+
+let currentQ = 0, answered = false;
+
+function renderQuestion(idx) {
+  answered = false;
+  const q = questions[idx];
+  document.getElementById('quiz-question').textContent = q.q;
+  const optDiv = document.getElementById('quiz-options');
+  optDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optDiv.appendChild(btn);
+  });
+  const fb = document.getElementById('quiz-feedback');
+  const nxt = document.getElementById('quiz-next');
+  fb.className = 'quiz-feedback'; fb.textContent = '';
+  nxt.className = 'quiz-next';
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach((b, i) => {
+    if (i === q.answer) b.classList.add('correct');
+    else if (i === idx && i !== q.answer) b.classList.add('wrong');
+    b.disabled = true;
+  });
+  const fb = document.getElementById('quiz-feedback');
+  if (idx === q.answer) {
+    fb.className = 'quiz-feedback show good';
+    fb.textContent = q.exp;
+  } else {
+    fb.className = 'quiz-feedback show bad';
+    fb.textContent = '❌ Not quite. ' + q.exp;
+  }
+  document.getElementById('quiz-next').className = 'quiz-next show btn-secondary';
+}
+
+function nextQuestion() {
+  currentQ = (currentQ + 1) % questions.length;
+  renderQuestion(currentQ);
+}
+
+renderQuestion(0);
+
+// LEVELS
+function setLevel(el) {
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// FLASHCARDS
+const cards = [
+  { word: 'Persevere', pos: 'verb', meaning: 'To continue doing something even when it\'s difficult or takes a long time.', example: '"She persevered with her studies despite many challenges."' },
+  { word: 'Eloquent', pos: 'adjective', meaning: 'Able to express yourself clearly and persuasively in speech or writing.', example: '"He gave an eloquent speech that moved the whole audience."' },
+  { word: 'Tenacious', pos: 'adjective', meaning: 'Determined and not giving up easily; holding on firmly to something.', example: '"She was tenacious in her pursuit of a medical degree."' },
+  { word: 'Ambiguous', pos: 'adjective', meaning: 'Having more than one possible meaning; not clearly expressed.', example: '"The instructions were ambiguous and hard to follow."' },
+  { word: 'Diligent', pos: 'adjective', meaning: 'Careful and hard-working; giving serious attention to a task.', example: '"A diligent student reviews notes after every class."' },
+];
+
+let cardIdx = 0, flipped = false;
+
+function showCard(idx) {
+  flipped = false;
+  const c = cards[idx];
+  document.getElementById('card-word').textContent = c.word;
+  document.getElementById('card-meaning').textContent = c.meaning;
+  document.getElementById('card-example').textContent = c.example;
+  document.querySelector('.card-pos').textContent = c.pos;
+  document.getElementById('card-front').style.display = 'block';
+  document.getElementById('card-back').style.display = 'none';
+  document.querySelector('.flashcard::before');
+}
+
+function flipCard() {
+  flipped = !flipped;
+  document.getElementById('card-front').style.display = flipped ? 'none' : 'block';
+  document.getElementById('card-back').style.display = flipped ? 'block' : 'none';
+}
+
+function nextCard() { cardIdx = (cardIdx + 1) % cards.length; showCard(cardIdx); }
+function prevCard() { cardIdx = (cardIdx - 1 + cards.length) % cards.length; showCard(cardIdx); }
+
+showCard(0);
+</script>
+</body>
+</html>
